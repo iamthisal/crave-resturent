@@ -16,4 +16,9 @@ public class OrderController {
     public OrderResponse place(Principal user, @Valid @RequestBody OrderRequest request) { return orders.place(user.getName(), request); }
     @GetMapping("/my") public List<OrderResponse> mine(Principal user) { return orders.mine(user.getName()); }
     @GetMapping public List<OrderResponse> all() { return orders.all(); }
+
+    @PutMapping("/{id}/status")
+    public OrderResponse updateStatus(@PathVariable Long id, @Valid @RequestBody StatusRequest request) {
+        return orders.updateStatus(id, request.status());
+    }
 }

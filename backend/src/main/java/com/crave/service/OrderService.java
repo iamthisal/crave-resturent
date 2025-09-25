@@ -38,4 +38,11 @@ public class OrderService {
     }
     @Transactional(readOnly = true)
     public List<OrderResponse> all() { return orders.findAllByOrderByCreatedAtDesc().stream().map(OrderResponse::from).toList(); }
+
+    public OrderResponse updateStatus(Long id, OrderStatus status) {
+        Order order = orders.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        if (status.ordinal() != order.getStatus().ordinal() + 1)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order status must advance one step at a time");
+        order.setStatus(status); return OrderResponse.from(order);
+    }
 }
