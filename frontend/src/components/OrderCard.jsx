@@ -1,0 +1,51 @@
+import { money } from "../api";
+export const statuses = ["PENDING", "PREPARING", "DELIVERING", "DELIVERED"];
+export default function OrderCard({ order, children }) {
+  return (
+    <article className="panel order-card">
+      <div className="order-heading">
+        <div>
+          <h3>Order #{order.id}</h3>
+          <small className="muted">
+            {new Date(order.createdAt).toLocaleString()}
+          </small>
+        </div>
+        <span className={`status status-${order.status.toLowerCase()}`}>
+          {order.status}
+        </span>
+      </div>
+      <ol className="order-progress">
+        {statuses.map((status, index) => (
+          <li
+            key={status}
+            className={
+              index <= statuses.indexOf(order.status) ? "complete" : ""
+            }
+          >
+            {status.toLowerCase()}
+          </li>
+        ))}
+      </ol>
+      <ul className="order-items">
+        {order.items.map((item, index) => (
+          <li key={index}>
+            <span>
+              {item.quantity} × {item.dishName}
+            </span>
+            <strong>{money(item.price * item.quantity)}</strong>
+          </li>
+        ))}
+      </ul>
+      <div className="summary-line total">
+        <span>Total · Cash on delivery</span>
+        <strong>{money(order.total)}</strong>
+      </div>
+      <p>
+        <strong>{order.fullName}</strong> · {order.phone}
+      </p>
+      <p className="muted">{order.deliveryAddress}</p>
+      {order.note && <p className="muted">Note: {order.note}</p>}
+      {children}
+    </article>
+  );
+}
