@@ -1,6 +1,8 @@
 # Crave Restaurant
 
-A simple full-stack restaurant ordering system for a second-year university project. Customers browse the menu, keep a cart, place cash-on-delivery orders, and track their status. Admins manage dishes and update orders.
+Object Oriented Analysis and Design group project — SE2012.
+
+Customers browse the menu, keep a cart, place cash-on-delivery orders, and track their status. Admins manage dishes and update orders.
 
 ## Features
 
